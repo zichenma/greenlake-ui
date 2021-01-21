@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import { Hello, Hello2}  from './components/Hello';
+import { LikeButton, LikeButton2 } from './components/LikeButton';
 
 import './App.css';
 
@@ -14,6 +15,8 @@ function App() {
         </p>
         <Hello message="Hello World" />
         <Hello2 message="Hello World2" />
+        <LikeButton />
+        <LikeButton2 />
         <a
           className="App-link"
           href="https://reactjs.org"
