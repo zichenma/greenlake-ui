@@ -20,7 +20,9 @@ const MouseTracker: React.FC = () => {
             console.log('remove effect')
             document.removeEventListener('click', updateMouse);
         }
-    })
+        // 如果是一个空数组，useEffect 将不依赖，props 或 state 中的值，将不会重复执行
+    },[])
+    
     console.log('before render ', positions.x);
    
     return (

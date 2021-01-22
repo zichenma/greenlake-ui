@@ -24,8 +24,10 @@ const LikeButton2: React.FC = () => {
     //  type EffectCallback = () => (void | (() => void | undefined));
     // 默认情况下在第一次渲染，和每一次渲染都会执行
     useEffect(() => {
+        console.log(`document title effect is running`)
         document.title = `点击了 ${like}`;
-    })
+        // [like]： 只有当 like 变化时候 useEffect 才会执行， 而 on 变量变化则 useEffect不会执行
+    }, [like])
 
 
     return (
