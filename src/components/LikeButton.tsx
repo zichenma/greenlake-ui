@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const LikeButton: React.FC = () => {
     // 通过语法提示，可以看到， useSate 返回值是一个数组
@@ -19,6 +19,15 @@ const LikeButton2: React.FC = () => {
     // 和 setState 不同， 这里可以用多个 states: 
     const [like, setLike] = useState(0);
     const [on, setOn] = useState(true);
+    
+
+    //  type EffectCallback = () => (void | (() => void | undefined));
+    // 默认情况下在第一次渲染，和每一次渲染都会执行
+    useEffect(() => {
+        document.title = `点击了 ${like}`;
+    })
+
+
     return (
         <>
         {/* 和 setState 不同，useState 在更新状态的时候， 总是替换 state，所以这里需要把全部属性都添加上 */}
