@@ -4,12 +4,27 @@ import { Hello, Hello2}  from './components/Hello';
 import { LikeButton, LikeButton2 } from './components/LikeButton';
 import MouseTracker from './components/MouseTracker';
 import useMousePosition from './hooks/useMousePosition';
-
+import withLoader from './components/withLoader';
 import './App.css';
+
+interface IShowResult {
+  message: string;
+  status: string;
+}
+
+const DogShow: React.FC<{data : IShowResult}> = ({ data }) => {
+    return (
+      <>
+        <h2>Dog Show: {data.status}</h2>
+        <img src={data.message} />
+      </>
+    )
+}
 
 function App() {
   const [show, setShow] = useState(true);
   const {x, y} = useMousePosition();
+  const WrappedDogShow = withLoader(DogShow, 'https://dog.ceo/api/breeds/image/random')
   return (
     <div className="App">
       <header className="App-header">
@@ -17,6 +32,7 @@ function App() {
         <p>
           <button onClick={() => setShow(!show)}>Toggle Tracker</button>
         </p>
+        <WrappedDogShow />
         <Hello message="Hello World" />
         <Hello2 message="Hello World2" />
         <p> 
