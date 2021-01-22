@@ -3,11 +3,13 @@ import logo from './logo.svg';
 import { Hello, Hello2}  from './components/Hello';
 import { LikeButton, LikeButton2 } from './components/LikeButton';
 import MouseTracker from './components/MouseTracker';
+import useMousePosition from './hooks/useMousePosition';
 
 import './App.css';
 
 function App() {
   const [show, setShow] = useState(true);
+  const {x, y} = useMousePosition();
   return (
     <div className="App">
       <header className="App-header">
@@ -17,6 +19,11 @@ function App() {
         </p>
         <Hello message="Hello World" />
         <Hello2 message="Hello World2" />
+        <p> 
+            自定义 hook : < br/>
+            X : { x } < br/>
+            Y : { y }
+        </p>
         <LikeButton />
         <LikeButton2 />
         {show && <MouseTracker />}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import useMousePosition from '../hooks/useMousePosition';
 
 const LikeButton: React.FC = () => {
     // 通过语法提示，可以看到， useSate 返回值是一个数组
@@ -19,7 +20,7 @@ const LikeButton2: React.FC = () => {
     // 和 setState 不同， 这里可以用多个 states: 
     const [like, setLike] = useState(0);
     const [on, setOn] = useState(true);
-    
+    const {x , y} = useMousePosition();
 
     //  type EffectCallback = () => (void | (() => void | undefined));
     // 默认情况下在第一次渲染，和每一次渲染都会执行
@@ -36,6 +37,11 @@ const LikeButton2: React.FC = () => {
         {/* <button onClick={() => setObj({like : obj.like + 1, on: obj.on})}>
             like btn2 : { obj.like } 👍 
         </button> */}
+         <h2> 
+            自定义 hook : < br/>
+            X : { x } < br/>
+            Y : { y }
+        </h2>
          <button onClick={() => setLike(like + 1)}>
             like btn2 : { like } 👍 
         </button>
