@@ -29,7 +29,21 @@ const LikeButton2: React.FC = () => {
         document.title = `点击了 ${like}`;
         // [like]： 只有当 like 变化时候 useEffect 才会执行， 而 on 变量变化则 useEffect不会执行
     }, [like])
+    
+    // 实验：
+    // 当点击 handleAlert 后， 继续点击 like button
+    // 当 3 秒后 Alert 窗口显示 like 的数量 要小于 like button 上 like 数量
+    // 结论：
+    // 1. handleAlert 捕捉到的是，触发 click 事件时的 like 数量
+    // 2. Like 仅是一个常量， 当 setLike 时候 React 会带着不同的 like 值， 再次调用组件， 
+    // 然后 react 会根据 like 值，更新 dom， 以保持渲染输出一致。这里的关键在于，
+    // 任意一次渲染中的 like 常量，都不会随之时间改变
 
+    function handleAlertClick() {
+        setTimeout(() => {
+            alert(`you clicked on ${like}`)
+        }, 3000)
+    }
 
     return (
         <>
@@ -48,6 +62,7 @@ const LikeButton2: React.FC = () => {
         <button onClick={() => setOn(!on)}>
             { on ? 'ON' : 'OFF' } 
         </button>
+        <button onClick={handleAlertClick}>Alert!</button>
         </>
     )
 }
