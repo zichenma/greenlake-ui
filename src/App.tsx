@@ -4,7 +4,8 @@ import { Hello, Hello2}  from './components/Hello';
 import { LikeButton, LikeButton2 } from './components/LikeButton';
 import MouseTracker from './components/MouseTracker';
 import useMousePosition from './hooks/useMousePosition';
-import withLoader from './components/withLoader';
+// import withLoader from './components/withLoader';
+import useURLLoader from './hooks/useURLLoader';
 import './App.css';
 
 interface IShowResult {
@@ -12,27 +13,33 @@ interface IShowResult {
   status: string;
 }
 
-const DogShow: React.FC<{data : IShowResult}> = ({ data }) => {
-    return (
-      <>
-        <h2>Dog Show: {data.status}</h2>
-        <img src={data.message} />
-      </>
-    )
-}
+// for HOC: withLoader
+// const DogShow: React.FC<{data : IShowResult}> = ({ data }) => {
+//     return (
+//       <>
+//         <h2>Dog Show: {data.status}</h2>
+//         <img src={data.message} />
+//       </>
+//     )
+// }
 
 function App() {
   const [show, setShow] = useState(true);
+  const [data, loading] = useURLLoader(`https://dog.ceo/api/breeds/image/random`, [show]);
+  const dogResult = data as IShowResult;
+
   const {x, y} = useMousePosition();
-  const WrappedDogShow = withLoader(DogShow, 'https://dog.ceo/api/breeds/image/random')
+  // const WrappedDogShow = withLoader(DogShow, 'https://dog.ceo/api/breeds/image/random')
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          <button onClick={() => setShow(!show)}>Toggle Tracker</button>
+          {/* <button onClick={() => setShow(!show)}>Toggle Tracker</button> */}
+           <button onClick={() => setShow(!show)}>Refresh for new Dog</button>
         </p>
-        <WrappedDogShow />
+        { loading ? <p>🐶 读取中...</p> : <img src={dogResult && dogResult.message} /> }
+        {/* <WrappedDogShow /> */}
         <Hello message="Hello World" />
         <Hello2 message="Hello World2" />
         <p> 
