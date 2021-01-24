@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { couldStartTrivia } from 'typescript';
 import useMousePosition from '../hooks/useMousePosition';
 
 const LikeButton: React.FC = () => {
@@ -22,6 +23,33 @@ const LikeButton2: React.FC = () => {
     const [on, setOn] = useState(true);
     const {x , y} = useMousePosition();
 
+    // useRef 返回的是一个 MutableRefObject:
+    // interface MutableRefObject<T> {
+    //     current: T;
+    // }
+    // Ref 在所有 render 里面都保持着唯一的引用， 因此对 ref 的取值和赋值都是最终的状态， 而不会在不同的 render 之间存在一定的隔离
+    //修改  ref  的值，并不会诱发 render
+
+    const likeRef = useRef(0);
+    const didMountRef = useRef(false);
+    const domRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (didMountRef.current) {
+            console.log(`didMountRef is updated`); // 刷新页面后并不会输出 ’didMountRef is updated‘
+        } else {
+            // 第一次把 didMountRef 设置成 true
+            didMountRef.current = true;
+        }
+    })
+
+    useEffect(() => {
+        if (domRef && domRef.current) {
+            console.log(domRef)
+            domRef.current.focus();
+        }
+    })
+
     //  type EffectCallback = () => (void | (() => void | undefined));
     // 默认情况下在第一次渲染，和每一次渲染都会执行
     useEffect(() => {
@@ -41,12 +69,13 @@ const LikeButton2: React.FC = () => {
 
     function handleAlertClick() {
         setTimeout(() => {
-            alert(`you clicked on ${like}`)
+            alert(`you clicked on useState: ${like}, useRef: ${likeRef.current}`)
         }, 3000)
     }
 
     return (
         <>
+        <input type="text" ref={domRef}></input>
         {/* 和 setState 不同，useState 在更新状态的时候， 总是替换 state，所以这里需要把全部属性都添加上 */}
         {/* <button onClick={() => setObj({like : obj.like + 1, on: obj.on})}>
             like btn2 : { obj.like } 👍 
@@ -56,7 +85,7 @@ const LikeButton2: React.FC = () => {
             X : { x } < br/>
             Y : { y }
         </h2>
-         <button onClick={() => setLike(like + 1)}>
+         <button onClick={() => {setLike(like + 1); likeRef.current++}}>
             like btn2 : { like } 👍 
         </button>
         <button onClick={() => setOn(!on)}>
