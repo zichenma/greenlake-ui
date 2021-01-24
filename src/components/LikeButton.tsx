@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { couldStartTrivia } from 'typescript';
+import React, { useEffect, useState, useRef, useContext } from 'react';
+import { ThemeContext } from '../App';
 import useMousePosition from '../hooks/useMousePosition';
 
 const LikeButton: React.FC = () => {
@@ -33,6 +33,14 @@ const LikeButton2: React.FC = () => {
     const likeRef = useRef(0);
     const didMountRef = useRef(false);
     const domRef = useRef<HTMLInputElement>(null);
+    const theme = useContext(ThemeContext);
+
+    console.log(theme)
+
+    const style = {
+        background: theme.background,
+        color: theme.color
+    }
 
     useEffect(() => {
         if (didMountRef.current) {
@@ -85,7 +93,7 @@ const LikeButton2: React.FC = () => {
             X : { x } < br/>
             Y : { y }
         </h2>
-         <button onClick={() => {setLike(like + 1); likeRef.current++}}>
+         <button style={style} onClick={() => {setLike(like + 1); likeRef.current++}}>
             like btn2 : { like } 👍 
         </button>
         <button onClick={() => setOn(!on)}>
