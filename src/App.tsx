@@ -9,7 +9,7 @@ function App() {
         <Button disabled> Disabled</Button>
         <Button btnType={ ButtonType.Primary } size={ButtonSize.Large}>Primary Large</Button>
         <Button btnType={ ButtonType.Default } size={ButtonSize.Small}>Default Small</Button>
-        <Button btnType={ ButtonType.Danger } size={ButtonSize.Large}> Danger Large</Button>
+        <Button btnType={ ButtonType.Danger } size={ButtonSize.Small}> Danger Large</Button>
         <Button btnType={ButtonType.Link} href="https://www.google.com" disabled>Google Link(default)</Button>
         <Button btnType={ButtonType.Link} href="https://www.google.com" >Google Link(disabled)</Button>
         <p>
